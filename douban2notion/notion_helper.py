@@ -289,24 +289,39 @@ class NotionHelper:
             results.extend(response.get("results"))
         return results
 
-    def get_date_relation(self, properties, date):
-        if properties is not None:
-    properties["年"] = get_relation(
-        [self.get_year_relation_id(date)]
-    )
-    properties["月"] = get_relation(
-        [self.get_month_relation_id(date)]
-    )
-    properties["周"] = get_relation(
-        [self.get_week_relation_id(date)]
-    )
-    properties["日"] = get_relation(
-        [self.day_relation_id(date)]
-    )
-else:
-    # 如果 properties 为 None，设置默认值或其他处理
-    properties = {}
-    properties["年"] = get_relation(
-        [self.get_year_relation_id(date)]
-    )
-    # 继续处理其他项
+   def get_date_relation(self, properties, date):
+    # 先检查 properties 是否为 None
+    if properties is not None:
+        properties["年"] = get_relation(
+            [self.get_year_relation_id(date)]
+        ) or {}  # 如果 get_relation 返回 None，使用一个空字典
+
+        properties["月"] = get_relation(
+            [self.get_month_relation_id(date)]
+        ) or {}
+
+        properties["周"] = get_relation(
+            [self.get_week_relation_id(date)]
+        ) or {}
+
+        properties["日"] = get_relation(
+            [self.day_relation_id(date)]
+        ) or {}
+    else:
+        # 如果 properties 为 None，设置默认值
+        properties = {}
+        properties["年"] = get_relation(
+            [self.get_year_relation_id(date)]
+        ) or {}
+        properties["月"] = get_relation(
+            [self.get_month_relation_id(date)]
+        ) or {}
+        properties["周"] = get_relation(
+            [self.get_week_relation_id(date)]
+        ) or {}
+        properties["日"] = get_relation(
+            [self.day_relation_id(date)]
+        ) or {}
+
+    # 继续处理其他逻辑
+
