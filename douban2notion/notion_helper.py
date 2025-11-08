@@ -290,23 +290,23 @@ class NotionHelper:
         return results
 
     def get_date_relation(self, properties, date):
-        properties["年"] = get_relation(
-            [
-                self.get_year_relation_id(date),
-            ]
-        )
-        properties["月"] = get_relation(
-            [
-                self.get_month_relation_id(date),
-            ]
-        )
-        properties["周"] = get_relation(
-            [
-                self.get_week_relation_id(date),
-            ]
-        )
-        properties["日"] = get_relation(
-            [
-                self.get_day_relation_id(date),
-            ]
-        )
+        if properties is not None:
+    properties["年"] = get_relation(
+        [self.get_year_relation_id(date)]
+    )
+    properties["月"] = get_relation(
+        [self.get_month_relation_id(date)]
+    )
+    properties["周"] = get_relation(
+        [self.get_week_relation_id(date)]
+    )
+    properties["日"] = get_relation(
+        [self.day_relation_id(date)]
+    )
+else:
+    # 如果 properties 为 None，设置默认值或其他处理
+    properties = {}
+    properties["年"] = get_relation(
+        [self.get_year_relation_id(date)]
+    )
+    # 继续处理其他项
